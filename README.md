@@ -5,7 +5,7 @@ Landing page inmobiliaria para captación y calificación de potenciales comprad
 ## Stack
 
 - Next.js App Router + TypeScript
-- Tailwind CSS v4 para estilos base + CSS responsive de marca
+- Tailwind CSS v4 y CSS responsive de marca
 - Supabase (PostgreSQL) para leads
 - Vercel para despliegue
 
@@ -22,23 +22,21 @@ La clave `SUPABASE_SERVICE_ROLE_KEY` es privada: configurarla únicamente como v
 
 Ejecutar `supabase/schema.sql` desde el SQL Editor del proyecto Supabase. La tabla `leads` no permite lectura pública; los envíos se procesan desde una ruta de servidor.
 
-## Imágenes reales
+## Imágenes reales del proyecto
 
-Colocar los archivos aprobados del proyecto en `public/images/` con estos nombres:
+Ya se encuentran en `public/images/` los tres archivos de fotografía y el logo con estos nombres exactos:
 
-- `logo-campos-del-este.png`
-- `fase3-aerea-1.jpg`
-- `fase3-aerea-2.jpg`
-- `fase3-aerea-3.jpg`
-- `fase3-aerea-4.jpg`
-- `plano-fase3.jpg`
+- `logo-campos-del-este.png.jpeg`
+- `fase3-aerea-1.jpg.jpeg`
+- `fase3-aerea-2.jpg.jpeg`
+- `fase3-aerea-3.jpg.jpeg`
 
-Usar exclusivamente fotos y planos reales suministrados del proyecto. El material subido en la conversación todavía debe copiarse a estos archivos dentro del repositorio antes del lanzamiento visual final.
+No hay una cuarta fotografía. El plano original es un PDF y debe subirse a `public/images/plano-fase3.pdf`; la página ya está preparada para mostrarlo en un visor PDF y abrirlo por separado.
 
 ## WhatsApp
 
-El CTA final usa el enlace facilitado: `https://wa.link/rrzy8g`. Tras guardarse el lead en Supabase, se abre este enlace añadiendo un parámetro `text`; conviene verificar el comportamiento del shortlink antes del lanzamiento. Si wa.link ignora el texto, se puede reemplazar por un enlace `wa.me` que apunte al mismo número y mensaje precompletado.
+El CTA usa el enlace facilitado: `https://wa.link/rrzy8g`. Tras guardar el lead en Supabase, la página ofrece abrir WhatsApp; hay que comprobar si el shortlink admite el parámetro de texto precompletado antes del lanzamiento.
 
 ## Estado
 
-La página, la tabla de financiación y el flujo de calificación están implementados. Aún se requiere configurar Supabase y añadir los archivos reales de imagen descritos arriba, y después comprobar el build y el envío de un lead de prueba antes de publicar anuncios.
+La landing y el formulario están implementados. Pendiente: cargar el PDF original, configurar Supabase, y verificar el build y el envío de un lead de prueba antes de publicar anuncios.
