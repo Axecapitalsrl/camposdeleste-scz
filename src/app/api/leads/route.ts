@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     }
     if (body.consent !== true) return NextResponse.json({ error: "Se requiere consentimiento para registrar la consulta." }, { status: 400 });
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!url || !key) {
       return NextResponse.json({ error: "El formulario todavía no está conectado a la base de datos. Volvé a intentarlo más tarde." }, { status: 503 });
     }
