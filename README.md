@@ -31,7 +31,7 @@ Ya se encuentran en `public/images/` los tres archivos de fotografía y el logo 
 - `fase3-aerea-2.jpg.jpeg`
 - `fase3-aerea-3.jpg.jpeg`
 
-No hay una cuarta fotografía. El plano original es un PDF y debe subirse a `public/images/plano-fase3.pdf`; la página ya está preparada para mostrarlo en un visor PDF y abrirlo por separado.
+No hay una cuarta fotografía. El plano original se subió como `public/images/plano-fase3.pdf.pdf` (GitHub conservó la extensión `.pdf` que ya tenía el nombre al volver a subirlo). La página ya apunta a ese nombre para mostrarlo en un visor PDF y abrirlo por separado.
 
 ## WhatsApp
 
