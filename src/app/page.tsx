@@ -3,10 +3,9 @@ import LeadForm from "@/components/LeadForm";
 import { FINANCING_PLANS, PRESENTATION_VIDEO, WHATSAPP_LINK } from "@/lib/constants";
 
 const images = [
-  { src: "/images/fase3-aerea-1.jpg", alt: "Vista aérea real de Campos del Este" },
-  { src: "/images/fase3-aerea-2.jpg", alt: "Calles y terrenos de Campos del Este" },
-  { src: "/images/fase3-aerea-3.jpg", alt: "Vista aérea de la urbanización" },
-  { src: "/images/fase3-aerea-4.jpg", alt: "Vista de los lotes y caminos del proyecto" },
+  { src: "/images/fase3-aerea-1.jpg.jpeg", alt: "Vista aérea real de Campos del Este" },
+  { src: "/images/fase3-aerea-2.jpg.jpeg", alt: "Calles y terrenos de Campos del Este" },
+  { src: "/images/fase3-aerea-3.jpg.jpeg", alt: "Vista aérea de la urbanización" },
 ];
 
 function Photo({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
@@ -18,7 +17,7 @@ function CTA({ className = "" }: { className?: string }) {
 export default function Home() {
   return <main>
     <header className="site-header"><div className="container header-inner">
-      <a className="brand" href="#inicio" aria-label="Campos del Este, inicio"><div className="brand-mark"><img src="/images/logo-campos-del-este.png" alt="Campos del Este" /></div><span className="brand-caption">FASE III <i>·</i> SANTA CRUZ</span></a>
+      <a className="brand" href="#inicio" aria-label="Campos del Este, inicio"><div className="brand-mark"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" /></div><span className="brand-caption">FASE III <i>·</i> SANTA CRUZ</span></a>
       <nav className="desktop-nav" aria-label="Navegación principal"><a href="#proyecto">El proyecto</a><a href="#precios">Precios y planes</a><a href="#plano">Plano</a></nav>
       <CTA className="header-cta"/>
     </div></header>
@@ -44,7 +43,7 @@ export default function Home() {
       <span className="eyebrow">Conocé Campos del Este</span><h2 className="section-title">Antes de elegir, conocé el proyecto.</h2><p className="section-lead">Mirá la presentación y después consultá las alternativas de compra que se ajusten a tu plan.</p><CTA/>
     </div><div className="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/-xsqWpOnNpI?rel=0" title="Presentación de Campos del Este Fase III" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/><a className="video-external" href={PRESENTATION_VIDEO} target="_blank" rel="noreferrer">Ver en YouTube <ArrowRight size={15}/></a></div></div></section>
     <section className="gallery-section section"><div className="container"><div className="section-heading"><span className="eyebrow">Imágenes reales</span><h2 className="section-title">Así se ve Campos del Este.</h2><p className="section-lead">Fotografías compartidas del proyecto. La disponibilidad de cada lote debe confirmarse al momento de la consulta.</p></div>
-      <div className="gallery-grid">{images.map((image,index)=><div key={image.src} className={`gallery-item ${index===0?"gallery-main":""}`}><Photo src={image.src} alt={image.alt}/></div>)}</div>
+      <div className="gallery-grid gallery-three">{images.map((image,index)=><div key={image.src} className={`gallery-item ${index===0?"gallery-main":""}`}><Photo src={image.src} alt={image.alt}/></div>)}</div>
     </div></section>
     <section className="pricing section" id="precios"><div className="container">
       <div className="section-heading centered"><span className="eyebrow">Alternativas de compra</span><h2 className="section-title">Elegí cómo querés comprar.</h2><p className="section-lead">Valores de referencia compartidos para un lote. Los montos pueden variar según su ubicación, características y condiciones vigentes.</p></div>
@@ -60,7 +59,7 @@ export default function Home() {
     <section className="map-section section" id="plano"><div className="container map-grid"><div>
       <span className="eyebrow">Plano de urbanización</span><h2 className="section-title">Encontrá una opción para vos.</h2><p className="section-lead">Consultá el plano de la Fase III y preguntanos por los lotes disponibles y sus formas de pago.</p>
       <div className="map-legend"><span><i className="dot dot-cash"/> Verde oscuro: contado o crédito bancario</span><span><i className="dot dot-finance"/> Verde claro: financiación del proyecto</span><span><i className="dot dot-unavailable"/> Rojo: no se ofrece como disponible</span><span><i className="dot dot-check"/> Gris: estado por confirmar</span></div><CTA/>
-    </div><div className="map-card"><Photo src="/images/plano-fase3.jpg" alt="Plano general de urbanización de Campos del Este Fase III"/><div className="map-caption"><ShieldCheck size={17}/><span>La disponibilidad se confirma con el equipo comercial.</span></div></div></div></section>
+    </div><div className="map-card pdf-card"><iframe className="plan-pdf" src="/images/plano-fase3.pdf#toolbar=0" title="Plano PDF de urbanización de Campos del Este Fase III"/><div className="map-caption"><ShieldCheck size={17}/><span>Plano original en PDF. La disponibilidad se confirma con el equipo comercial.</span><a href="/images/plano-fase3.pdf" target="_blank" rel="noreferrer">Abrir PDF</a></div></div></div></section>
     <section className="lead-section section" id="agendar"><div className="lead-decoration"><span/><span/><span/></div><div className="container lead-grid"><div className="lead-copy">
       <span className="eyebrow">Coordiná una visita</span><h2 className="section-title">Hablemos de tu próximo terreno.</h2><p>Respondé unas preguntas cortas para que podamos orientarte según tu presupuesto, forma de pago e intención de compra.</p>
       <div className="lead-assurance"><ShieldCheck size={20}/><span><strong>Primero registramos tu consulta</strong><small>Al finalizar, vas a poder abrir WhatsApp y coordinar la cita.</small></span></div>
