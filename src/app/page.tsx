@@ -1,6 +1,6 @@
-import { ArrowDown, ArrowRight, CheckCircle2, CircleDollarSign, Clock3, MapPinned, Trees, WalletCards, PlayCircle, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowDown, ArrowRight, CheckCircle2, CircleDollarSign, Clock3, MapPinned, Trees, WalletCards, PlayCircle, ShieldCheck } from "lucide-react";
 import LeadForm from "@/components/LeadForm";
-import { FINANCING_PLANS, PRESENTATION_VIDEO, WHATSAPP_LINK } from "@/lib/constants";
+import { FINANCING_PLANS, PRESENTATION_VIDEO } from "@/lib/constants";
 
 const images = [
   { src: "/images/fase3-aerea-1.jpg.jpeg", alt: "Vista aérea real de Campos del Este" },
@@ -63,9 +63,8 @@ export default function Home() {
     <section className="lead-section section" id="agendar"><div className="lead-decoration"><span/><span/><span/></div><div className="container lead-grid"><div className="lead-copy">
       <span className="eyebrow">Coordiná una visita</span><h2 className="section-title">Hablemos de tu próximo terreno.</h2><p>Respondé unas preguntas cortas para que podamos orientarte según tu presupuesto, forma de pago e intención de compra.</p>
       <div className="lead-assurance"><ShieldCheck size={20}/><span><strong>Primero registramos tu consulta</strong><small>Al finalizar, vas a poder abrir WhatsApp y coordinar la cita.</small></span></div>
-      <div className="lead-direct"><MessageCircle size={18}/><span>¿Ya querés consultar? <a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">Abrir WhatsApp</a></span></div>
     </div><div className="form-card"><LeadForm/></div></div></section>
     <section className="final-cta"><div className="container final-cta-inner"><div><span className="eyebrow">Campos del Este · Fase III</span><h2>El próximo paso empieza con una visita.</h2><p>Consultá precios, disponibilidad y alternativas de compra.</p></div><CTA/></div></section>
-    <footer className="site-footer"><div className="container footer-inner"><div className="footer-brand"><div className="footer-mark"><img src="/images/logo-campos-del-este.png" alt="Campos del Este"/></div><span>FASE III · SANTA CRUZ</span></div><p>Precios y disponibilidad sujetos a confirmación comercial. Las imágenes corresponden al material proporcionado para el proyecto.</p><a href={WHATSAPP_LINK} target="_blank" rel="noreferrer">Contacto por WhatsApp <ArrowRight size={15}/></a></div><div className="container footer-bottom">© {new Date().getFullYear()} Campos del Este. Todos los derechos reservados.</div></footer>
+    <footer className="site-footer"><div className="container footer-inner"><div className="footer-brand"><div className="footer-mark"><img src="/images/logo-campos-del-este.png" alt="Campos del Este"/></div><span>FASE III · SANTA CRUZ</span></div><p>Precios y disponibilidad sujetos a confirmación comercial. Las imágenes corresponden al material proporcionado para el proyecto.</p><span className="footer-contact-note">Completá el formulario para coordinar una visita</span></div><div className="container footer-bottom">© {new Date().getFullYear()} Campos del Este. Todos los derechos reservados.</div></footer>
   </main>;
 }
