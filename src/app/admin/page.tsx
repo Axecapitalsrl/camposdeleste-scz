@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import {
-  ArrowDownToLine, ArrowLeft, CheckCircle2, ChevronDown, CircleDollarSign, Clock3,
+  ArrowDownToLine, CheckCircle2, ChevronDown, CircleDollarSign, Clock3,
   Filter, LogOut, MessageCircle, RefreshCw, Search, ShieldCheck, Users, X,
 } from "lucide-react";
 
@@ -110,6 +110,18 @@ export default function AdminPage() {
         cache: "no-store",
       });
       const result = await response.json();
+      if (response.status === 403) {
+        await supabase?.auth.signOut();
+        setSessionToken("");
+        setLoggedInEmail("");
+        throw new Error("Este usuario no está autorizado para ingresar al panel.");
+      }
+      if (response.status === 401) {
+        await supabase?.auth.signOut();
+        setSessionToken("");
+        setLoggedInEmail("");
+        throw new Error("La sesión venció. Iniciá sesión nuevamente.");
+      }
       if (!response.ok) throw new Error(result.error || "No pudimos cargar los leads.");
       setLeads(result.leads || []);
     } catch (e) {
