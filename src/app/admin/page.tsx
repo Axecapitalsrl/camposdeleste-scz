@@ -239,7 +239,7 @@ export default function AdminPage() {
 
   return <main className={`crm-shell ${sidebarCollapsed ? "crm-sidebar-collapsed" : ""} ${mobileSidebarOpen ? "crm-mobile-sidebar-open" : ""}`}>
     <aside className="crm-sidebar">
-      <a href="/" className="crm-brand"><span className="crm-brand-icon">CE</span><span className="crm-brand-copy"><strong>Campos del Este</strong><small>Panel comercial · Fase III</small></span></a>
+      <a href="/" className="crm-brand" aria-label="Campos del Este"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" className="crm-brand-image"/></a>
       <div className="crm-nav-label">GESTIÓN COMERCIAL</div>
       <nav className="crm-nav">{navItems.map((item) => {
         const Icon = item.icon;
