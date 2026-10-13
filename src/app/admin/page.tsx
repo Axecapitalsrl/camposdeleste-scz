@@ -249,7 +249,7 @@ export default function AdminPage() {
         return <button key={item.key} className={`crm-nav-item ${view === item.key ? "active" : ""}`} onClick={() => { setView(item.key); setMobileSidebarOpen(false); }} title={sidebarCollapsed ? item.title : undefined}>
           <Icon size={19}/><span>{item.title}</span>{item.key === "leads" && <em>{total}</em>}
         </button>;
-      })}</nav>
+      })}<a href="/admin/pipeline" className="crm-nav-item" title={sidebarCollapsed ? "Pipeline comercial" : undefined} onClick={() => setMobileSidebarOpen(false)}><Activity size={19}/><span>Pipeline comercial</span></a></nav>
       <div className="crm-sidebar-bottom"><div className="crm-sidebar-note"><ShieldCheck size={17}/><span>Datos privados de tu equipo comercial.</span></div>
         <button className="crm-nav-item crm-logout-link" onClick={signOut}><LogOut size={18}/><span>Cerrar sesión</span></button>
       </div>
