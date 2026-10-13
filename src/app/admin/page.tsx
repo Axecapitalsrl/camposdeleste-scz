@@ -1,10 +1,11 @@
 "use client";
 
-import { FormEvent, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import type { FormEvent, ReactNode } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import {
-  Activity, ArrowDownToLine, BarChart3, Building2, CheckCircle2, ChevronLeft, ChevronRight,
-  CircleDollarSign, Clock3, LayoutDashboard, LogOut, Menu, MessageCircle, RefreshCw,
+  Activity, ArrowDownToLine, BarChart3, ChevronLeft, ChevronRight,
+  Clock3, LayoutDashboard, LogOut, Menu, MessageCircle, RefreshCw,
   Search, Settings2, ShieldCheck, SlidersHorizontal, Users, X, CalendarCheck, Wallet,
 } from "lucide-react";
 import "./admin.css";
