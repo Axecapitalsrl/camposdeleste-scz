@@ -155,7 +155,19 @@ export default function PipelinePage() {
   }
 
   return (
-    <main className="ced-pipeline">
+    <div className="ced-pipeline-layout">
+      <aside className="ced-pipeline-sidebar">
+        <a className="ced-pipeline-sidebar-brand" href="/admin" aria-label="Volver al panel de Campos del Este"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este"/></a>
+        <div className="ced-pipeline-sidebar-label">GESTIÓN COMERCIAL</div>
+        <nav className="ced-pipeline-sidebar-nav" aria-label="Navegación principal">
+          <a href="/admin"><span className="ced-pipeline-nav-icon">▦</span>Resumen general</a>
+          <a href="/admin"><span className="ced-pipeline-nav-icon">♧</span>Todos los leads</a>
+          <a href="/admin"><span className="ced-pipeline-nav-icon">⚙</span>Personalizar panel</a>
+          <a href="/admin/pipeline" className="active"><span className="ced-pipeline-nav-icon">⌁</span>Pipeline comercial</a>
+        </nav>
+        <div className="ced-pipeline-sidebar-bottom"><ShieldCheck size={16}/><span>Datos privados de tu equipo comercial</span></div>
+      </aside>
+      <main className="ced-pipeline">
       <header className="ced-pipeline-topbar">
         <a className="ced-pipeline-brand" href="/admin" aria-label="Volver al panel comercial">
           <img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" />
@@ -241,6 +253,7 @@ export default function PipelinePage() {
         {!loading && filteredLeads.length === 0 && <div className="ced-pipeline-no-results">No hay leads que coincidan con la búsqueda.</div>}
         <footer className="ced-pipeline-footer"><span>Campos del Este · Pipeline comercial</span><span><ShieldCheck size={14}/> Datos privados del equipo comercial</span></footer>
       </section>
-    </main>
+      </main>
+    </div>
   );
 }
