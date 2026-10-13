@@ -23,7 +23,7 @@ async function sendMetaLeadEvent(request: Request, lead: { id: string; name: str
     return;
   }
 
-  const nameParts = lead.name.trim().split(/\\s+/);
+  const nameParts = lead.name.trim().split(/\s+/);
   const phone = lead.phone.replace(/[^0-9]/g, "");
   const forwardedFor = request.headers.get("x-forwarded-for");
   const clientIp = forwardedFor?.split(",")[0]?.trim();
@@ -105,7 +105,7 @@ export async function POST(request: Request) {
       phone: body.phone.trim(),
       payment_method: body.payment_method,
       initial_budget: body.initial_budget,
-      monthly_budget: body.monthlyBudget,
+      monthly_budget: body.monthly_budget,
       purpose: body.purpose,
       knows_zone: body.knows_zone,
       purchase_timing: body.purchase_timing,
