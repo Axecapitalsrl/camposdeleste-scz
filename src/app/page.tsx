@@ -17,7 +17,7 @@ function CTA({ className = "" }: { className?: string }) {
 }
 export default function Home() {
   return <main>
-    <Script id="meta-pixel" strategy="afterInteractive">{\`
+    <Script id="meta-pixel" strategy="afterInteractive">{`
       !function(f,b,e,v,n,t,s)
       {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
       n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -27,7 +27,7 @@ export default function Home() {
       'https://connect.facebook.net/en_US/fbevents.js');
       fbq('init', '3016882181992487');
       fbq('track', 'PageView');
-    \`}</Script>
+    `}</Script>
     <noscript><img height="1" width="1" style={{ display: "none" }} src="https://www.facebook.com/tr?id=3016882181992487&ev=PageView&noscript=1" alt="" /></noscript>
     <header className="site-header"><div className="container header-inner">
       <a className="brand" href="#inicio" aria-label="Campos del Este, inicio"><div className="brand-mark"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" /></div><span className="brand-caption">FASE III <i>·</i> SANTA CRUZ</span></a>
