@@ -160,9 +160,9 @@ export default function PipelinePage() {
         <a className="ced-pipeline-sidebar-brand" href="/admin" aria-label="Volver al panel de Campos del Este"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este"/></a>
         <div className="ced-pipeline-sidebar-label">GESTIÓN COMERCIAL</div>
         <nav className="ced-pipeline-sidebar-nav" aria-label="Navegación principal">
-          <a href="/admin"><span className="ced-pipeline-nav-icon">▦</span>Resumen general</a>
-          <a href="/admin"><span className="ced-pipeline-nav-icon">♧</span>Todos los leads</a>
-          <a href="/admin"><span className="ced-pipeline-nav-icon">⚙</span>Personalizar panel</a>
+          <a href="/admin?view=dashboard"><span className="ced-pipeline-nav-icon">▦</span>Resumen general</a>
+          <a href="/admin?view=leads"><span className="ced-pipeline-nav-icon">♧</span>Todos los leads</a>
+          <a href="/admin?view=settings"><span className="ced-pipeline-nav-icon">⚙</span>Personalizar panel</a>
           <a href="/admin/pipeline" className="active"><span className="ced-pipeline-nav-icon">⌁</span>Pipeline comercial</a>
         </nav>
         <div className="ced-pipeline-sidebar-bottom"><ShieldCheck size={16}/><span>Datos privados de tu equipo comercial</span></div>
