@@ -61,12 +61,12 @@ export default function Home() {
     <section className="pricing section" id="precios"><div className="container">
       <div className="section-heading centered"><span className="eyebrow">Alternativas de compra</span><h2 className="section-title">Elegí cómo querés comprar.</h2><p className="section-lead">Valores de referencia compartidos para un lote. Los montos pueden variar según su ubicación, características y condiciones vigentes.</p></div>
       <div className="price-cards">
-        <article className="price-card cash-card"><div className="price-icon"><CircleDollarSign size={25}/></div><span className="price-label">COMPRA AL CONTADO</span><h3>US$ 15.500</h3><p>Precio de referencia desde para compra al contado.</p><CTA className="btn-light"/></article>
+        <article className="price-card cash-card"><div className="price-icon"><CircleDollarSign size={25}/></div><span className="price-label">COMPRA AL CONTADO</span><h3>US$ 15.500</h3><p>Precio de venta al contado - Varia según sector</p><CTA className="btn-light"/></article>
         <article className="price-card finance-card"><div className="price-icon"><Clock3 size={25}/></div><span className="price-label">COMPRA A PLAZO</span><h3>Hasta 10 años</h3><p>Elegí el plazo que preferís y consultá las condiciones aplicables a cada lote.</p><a className="btn btn-white" href="#tabla-financiacion">Ver planes <ArrowRight size={17}/></a></article>
       </div>
       <div className="financing-table-wrap" id="tabla-financiacion"><div className="table-title"><div><span className="eyebrow">Compará alternativas</span><h3>Planes de financiación</h3></div><span className="table-usd">Importes en USD</span></div>
         <div className="table-scroll"><table className="financing-table"><thead><tr><th>Plazo</th><th>Cuota inicial</th><th>Cuota mensual</th><th>Total deuda</th></tr></thead><tbody>{FINANCING_PLANS.map((plan)=><tr key={plan.years}><th scope="row">{plan.years} {plan.years===1?"año":"años"}</th><td>{plan.initial.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>{plan.monthly.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td>{plan.total.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}</td></tr>)}</tbody></table></div>
-        <p className="table-note">Valores tomados de la referencia proporcionada. Confirmá las condiciones vigentes, la cantidad de cuotas y el lote elegido antes de concretar la compra.</p><CTA/>
+        <CTA/>
       </div>
     </div></section>
     <section className="map-section section" id="plano"><div className="container map-grid"><div>
