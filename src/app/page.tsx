@@ -71,7 +71,7 @@ export default function Home() {
     </div></section>
     <section className="map-section section" id="plano"><div className="container map-grid"><div>
       <span className="eyebrow">Plano de urbanización</span><h2 className="section-title">Encontrá una opción para vos.</h2><p className="section-lead">Consultá el plano de la Fase III y preguntanos por los lotes disponibles y sus formas de pago.</p>
-      <div className="map-legend"><span><i className="dot dot-cash"/> Verde oscuro: contado o crédito bancario</span><span><i className="dot dot-finance"/> Verde claro: financiación del proyecto</span><span><i className="dot dot-unavailable"/> Rojo: no se ofrece como disponible</span><span><i className="dot dot-check"/> Gris: estado por confirmar</span></div><CTA/>
+      <CTA/>
     </div><div className="map-card pdf-card"><iframe className="plan-pdf" src="/images/plano-fase3.pdf.pdf#toolbar=0" title="Plano PDF de urbanización de Campos del Este Fase III"/><div className="map-caption"><ShieldCheck size={17}/><span>Plano original en PDF. La disponibilidad se confirma con el equipo comercial.</span><a href="/images/plano-fase3.pdf.pdf" target="_blank" rel="noreferrer">Abrir PDF</a></div></div></div></section>
     <section className="lead-section section" id="agendar"><div className="lead-decoration"><span/><span/><span/></div><div className="container lead-grid"><div className="lead-copy">
       <span className="eyebrow">Coordiná una visita</span><h2 className="section-title">Hablemos de tu próximo terreno.</h2><p>Respondé unas preguntas cortas para que podamos orientarte según tu presupuesto, forma de pago e intención de compra.</p>
