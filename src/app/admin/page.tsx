@@ -95,7 +95,8 @@ export default function AdminPage() {
       const saved = window.localStorage.getItem("ced-admin-widgets");
       if (saved) setWidgets({ ...defaultWidgets, ...JSON.parse(saved) });
       setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");
-      const savedScale = Number(window.localStorage.getItem("ced-admin-font-scale"));\n      if ([0.9, 1, 1.1, 1.2].includes(savedScale)) setFontScale(savedScale);
+      const savedScale = Number(window.localStorage.getItem("ced-admin-font-scale"));
+      if ([0.9, 1, 1.1, 1.2].includes(savedScale)) setFontScale(savedScale);
     } catch { /* configuración local opcional */ }
     setSettingsReady(true);
   }, []);
