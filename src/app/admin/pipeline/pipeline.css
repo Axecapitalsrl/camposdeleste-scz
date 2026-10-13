@@ -25,3 +25,24 @@
 .ced-pipeline-layout .ced-pipeline-topbar{position:sticky;top:0}
 @media(max-width:900px){.ced-pipeline-sidebar{width:228px;flex-basis:228px;padding:18px 12px}.ced-pipeline-layout>.ced-pipeline{width:calc(100% - 228px)}.ced-pipeline-sidebar-brand img{width:150px}.ced-pipeline-sidebar-nav a{padding:0 10px;font-size:11px}}
 @media(max-width:680px){.ced-pipeline-layout{display:flex;flex-direction:column}.ced-pipeline-sidebar{position:relative;top:auto;width:100%;height:auto;min-height:0;flex:none;padding:10px 12px;border-right:0;border-bottom:1px solid #e2e8f0}.ced-pipeline-sidebar-brand{height:48px;margin:0 0 6px;padding:0 5px}.ced-pipeline-sidebar-brand img{height:44px;width:120px}.ced-pipeline-sidebar-label{margin:4px 5px 7px;font-size:9px}.ced-pipeline-sidebar-nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px}.ced-pipeline-sidebar-nav a{min-height:38px;padding:0 10px;white-space:nowrap;flex:none;font-size:10px}.ced-pipeline-nav-icon{font-size:17px;width:16px}.ced-pipeline-sidebar-bottom{display:none}.ced-pipeline-layout>.ced-pipeline{width:100%;min-width:0}.ced-pipeline-layout .ced-pipeline-topbar{top:0;position:relative}}
+
+/* Ajuste visual: conservar la identidad del CRM principal */
+.ced-pipeline-layout{background:var(--crm-bg,#f5f7f8);color:var(--crm-ink,#17241f)}
+.ced-pipeline-sidebar{width:304px;flex-basis:304px;padding:24px 17px 20px;border-right:1px solid #e7ece8}
+.ced-pipeline-sidebar-brand{height:91px;width:100%;padding:0 9px 27px;margin:0 0 0;align-items:flex-start}
+.ced-pipeline-sidebar-brand img{width:90px;height:76px;object-position:left top}
+.ced-pipeline-sidebar-label{font-size:9px;letter-spacing:.14em;color:#9aa59e;padding:5px 12px 12px;margin:0}
+.ced-pipeline-sidebar-nav{display:grid;gap:5px}
+.ced-pipeline-sidebar-nav a{width:100%;min-height:44px;border-radius:10px;padding:0 12px;gap:12px;color:#66756d;font-size:12px;font-weight:650;white-space:nowrap}
+.ced-pipeline-sidebar-nav a svg{flex:none;color:currentColor}
+.ced-pipeline-sidebar-nav a:hover{background:#f4f7f4;color:#24382c}
+.ced-pipeline-sidebar-nav a.active{background:#edf5e9;color:#4e7e2c;font-weight:800}
+.ced-pipeline-nav-icon{display:none}
+.ced-pipeline-sidebar-bottom{margin: auto 3px 8px;padding:12px;border-radius:10px;background:#f6f8f3;font-size:10px;color:#77847d}
+.ced-pipeline-layout>.ced-pipeline{width:calc(100% - 304px);font-family:inherit}
+.ced-pipeline-topbar{height:88px;padding:0 28px;gap:24px}
+.ced-pipeline-breadcrumb{margin-left:20px}
+.ced-pipeline-heading h1{font-size:30px;font-weight:750;letter-spacing:-.035em;line-height:1.2}
+.ced-pipeline-heading p{font-size:14px}
+@media(max-width:900px){.ced-pipeline-sidebar{width:228px;flex-basis:228px;padding:18px 12px}.ced-pipeline-layout>.ced-pipeline{width:calc(100% - 228px)}.ced-pipeline-sidebar-brand img{width:90px}.ced-pipeline-sidebar-nav a{padding:0 10px;font-size:11px}}
+@media(max-width:680px){.ced-pipeline-sidebar{width:100%;flex-basis:auto;padding:10px 12px}.ced-pipeline-sidebar-brand{height:48px;margin:0 0 6px;padding:0 5px}.ced-pipeline-sidebar-brand img{height:44px;width:75px}.ced-pipeline-sidebar-label{margin:4px 5px 7px;font-size:9px}.ced-pipeline-sidebar-nav a{min-height:38px;padding:0 10px;white-space:nowrap;flex:none;font-size:10px}.ced-pipeline-sidebar-bottom{display:none}.ced-pipeline-layout>.ced-pipeline{width:100%}.ced-pipeline-breadcrumb{margin-left:0}}
