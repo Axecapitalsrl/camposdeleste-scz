@@ -4,9 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@supabase/supabase-js";
 import {
-  ArrowRight, Bell, CalendarDays, Check, ChevronDown, CircleDot, Clock3,
-  GripVertical, LayoutDashboard, LoaderCircle, LogOut, MessageCircle,
-  Plus, RefreshCw, Search, ShieldCheck, UserRound, Users,
+  ArrowRight, Check, ChevronDown, Clock3, GripVertical, LoaderCircle,
+  LogOut, RefreshCw, Search, ShieldCheck, Users,
 } from "lucide-react";
 import "./pipeline.css";
 
@@ -98,7 +97,6 @@ export default function PipelinePage() {
       }
       setToken(data.session.access_token);
       setEmail(data.session.user.email || "");
-      void loadLeads(data.session.access_token);
     });
     const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!active) return;
