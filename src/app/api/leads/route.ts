@@ -104,7 +104,7 @@ export async function POST(request: Request) {
       name: body.name.trim(),
       phone: body.phone.trim(),
       payment_method: body.payment_method,
-      initial_budget: body.initialBudget,
+      initial_budget: body.initial_budget,
       monthly_budget: body.monthlyBudget,
       purpose: body.purpose,
       knows_zone: body.knows_zone,
