@@ -94,14 +94,16 @@ export default function AdminPage() {
     try {
       const saved = window.localStorage.getItem("ced-admin-widgets");
       if (saved) setWidgets({ ...defaultWidgets, ...JSON.parse(saved) });
-      setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");\n      const savedScale = Number(window.localStorage.getItem("ced-admin-font-scale"));\n      if ([0.9, 1, 1.1, 1.2].includes(savedScale)) setFontScale(savedScale);
+      setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");
+      const savedScale = Number(window.localStorage.getItem("ced-admin-font-scale"));\n      if ([0.9, 1, 1.1, 1.2].includes(savedScale)) setFontScale(savedScale);
     } catch { /* configuración local opcional */ }
     setSettingsReady(true);
   }, []);
   useEffect(() => {
     if (settingsReady) {
       window.localStorage.setItem("ced-admin-widgets", JSON.stringify(widgets));
-      window.localStorage.setItem("ced-admin-sidebar", sidebarCollapsed ? "collapsed" : "expanded");\n      window.localStorage.setItem("ced-admin-font-scale", String(fontScale));
+      window.localStorage.setItem("ced-admin-sidebar", sidebarCollapsed ? "collapsed" : "expanded");
+      window.localStorage.setItem("ced-admin-font-scale", String(fontScale));
     }
   }, [widgets, sidebarCollapsed, fontScale, settingsReady]);
 
