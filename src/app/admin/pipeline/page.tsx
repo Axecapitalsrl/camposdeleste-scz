@@ -169,10 +169,7 @@ export default function PipelinePage() {
       </aside>
       <main className="ced-pipeline">
       <header className="ced-pipeline-topbar">
-        <a className="ced-pipeline-brand" href="/admin" aria-label="Volver al panel comercial">
-          <img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" />
-        </a>
-        <div className="ced-pipeline-breadcrumb"><span>CRM / PIPELINE</span><strong>Pipeline comercial</strong></div>
+        <div className="ced-pipeline-breadcrumb"><span>Campos del Este / Fase III</span><strong>Pipeline comercial</strong></div>
         <div className="ced-pipeline-account">
           <span className="ced-pipeline-online" title="Sesión activa" />
           <span className="ced-pipeline-email">{email}</span>
