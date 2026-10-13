@@ -31,7 +31,7 @@ export default function Home() {
     <noscript><img height="1" width="1" style={{ display: "none" }} src="https://www.facebook.com/tr?id=3016882181992487&ev=PageView&noscript=1" alt="" /></noscript>
     <header className="site-header"><div className="container header-inner">
       <a className="brand" href="#inicio" aria-label="Campos del Este, inicio"><div className="brand-mark"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" /></div><span className="brand-caption">FASE III <i>·</i> SANTA CRUZ</span></a>
-      <nav className="desktop-nav" aria-label="Navegación principal"><a href="#proyecto">El proyecto</a><a href="#precios">Precios y planes</a><a href="#plano">Plano</a></nav>
+      <nav className="desktop-nav" aria-label="Navegación principal"><a href="#proyecto">El proyecto</a><a href="#precios">Precios y planes</a></nav>
       <CTA className="header-cta"/>
     </div></header>
     <section className="hero" id="inicio"><div className="hero-background"><Photo src={images[0].src} alt={images[0].alt}/><div className="hero-shade"/></div>
@@ -44,7 +44,7 @@ export default function Home() {
     </section>
     <section className="intro section" id="proyecto"><div className="container intro-grid"><div>
       <span className="eyebrow">Campos del Este · Fase III</span><h2 className="section-title">Un lugar para proyectar tu próximo paso.</h2>
-      <p className="section-lead">Conocé el desarrollo, revisá el plano de urbanización y compará las alternativas de compra. Nuestro equipo puede orientarte sobre los lotes y las condiciones disponibles.</p>
+      <p className="section-lead">Conocé el desarrollo y compará las alternativas de compra. Nuestro equipo puede orientarte sobre los lotes y las condiciones disponibles.</p>
       <div className="benefit-list">
         <div><span className="benefit-icon"><MapPinned size={21}/></span><span><strong>Conocé la ubicación</strong><small>Consultá cómo llegar y familiarizate con la zona.</small></span></div>
         <div><span className="benefit-icon"><WalletCards size={21}/></span><span><strong>Alternativas de compra</strong><small>Contado y diferentes plazos de financiación.</small></span></div>
@@ -74,10 +74,6 @@ export default function Home() {
         <CTA/>
       </div>
     </div></section>
-    <section className="map-section section" id="plano"><div className="container map-grid"><div>
-      <span className="eyebrow">Plano de urbanización</span><h2 className="section-title">Encontrá una opción para vos.</h2><p className="section-lead">Consultá el plano de la Fase III y preguntanos por los lotes disponibles y sus formas de pago.</p>
-      <CTA/>
-    </div><div className="map-card pdf-card"><iframe className="plan-pdf" src="/images/plano-fase3.pdf.pdf#toolbar=0" title="Plano PDF de urbanización de Campos del Este Fase III"/><div className="map-caption"><ShieldCheck size={17}/><span>Plano original en PDF. La disponibilidad se confirma con el equipo comercial.</span><a href="/images/plano-fase3.pdf.pdf" target="_blank" rel="noreferrer">Abrir PDF</a></div></div></div></section>
     <section className="lead-section section" id="agendar"><div className="lead-decoration"><span/><span/><span/></div><div className="container lead-grid"><div className="lead-copy">
       <span className="eyebrow">Coordiná una visita</span><h2 className="section-title">Hablemos de tu próximo terreno.</h2><p>Respondé unas preguntas cortas para que podamos orientarte según tu presupuesto, forma de pago e intención de compra.</p>
       <div className="lead-assurance"><ShieldCheck size={20}/><span><strong>Primero registramos tu consulta</strong><small>Al finalizar, vas a poder abrir WhatsApp y coordinar la cita.</small></span></div>
