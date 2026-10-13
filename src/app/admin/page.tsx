@@ -92,6 +92,8 @@ export default function AdminPage() {
 
   useEffect(() => {
     try {
+      const requestedView = new URLSearchParams(window.location.search).get("view");
+      if (requestedView === "dashboard" || requestedView === "leads" || requestedView === "settings") setView(requestedView);
       const saved = window.localStorage.getItem("ced-admin-widgets");
       if (saved) setWidgets({ ...defaultWidgets, ...JSON.parse(saved) });
       setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");
