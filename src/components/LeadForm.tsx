@@ -56,7 +56,7 @@ export default function LeadForm() {
 
   // Cash buyers skip all financing-specific questions.
   const activeSteps = useMemo(
-    () => answers.payment === "cash"
+    () => (answers.payment === "cash" || answers.payment === "bank")
       ? steps.filter((item) => !["initialBudget", "years", "monthlyBudget"].includes(item.key))
       : steps,
     [answers.payment],
@@ -66,10 +66,10 @@ export default function LeadForm() {
 
   const update = (key: keyof Answers, value: string | boolean) => {
     setAnswers((prev) => {
-      if (key === "payment" && value === "cash") {
-        return { ...prev, payment: "cash", initialBudget: "not_applicable_cash", years: "not_applicable_cash", monthlyBudget: "not_applicable_cash" };
+      if (key === "payment" && (value === "cash" || value === "bank")) {
+        return { ...prev, payment: String(value), initialBudget: "not_applicable_cash", years: "not_applicable_cash", monthlyBudget: "not_applicable_cash" };
       }
-      if (key === "payment" && value !== "cash" && prev.payment === "cash") {
+      if (key === "payment" && value !== "cash" && value !== "bank" && (prev.payment === "cash" || prev.payment === "bank")) {
         return { ...prev, payment: String(value), initialBudget: "", years: "", monthlyBudget: "" };
       }
       return { ...prev, [key]: value };
@@ -88,20 +88,20 @@ export default function LeadForm() {
     if (!answers.consent) { setError("Necesitamos tu autorización para guardar tus datos y contactarte sobre el proyecto."); return; }
     setBusy(true);
     try {
-      const isCash = answers.payment === "cash";
+      const isCashPurchase = answers.payment === "cash" || answers.payment === "bank";
       const response = await fetch("/api/leads", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: answers.name.trim(),
           phone: answers.phone.trim(),
           payment_method: answers.payment,
-          initial_budget: isCash ? "not_applicable_cash" : answers.initialBudget,
-          monthly_budget: isCash ? "not_applicable_cash" : answers.monthlyBudget,
+          initial_budget: isCashPurchase ? "not_applicable_cash" : answers.initialBudget,
+          monthly_budget: isCashPurchase ? "not_applicable_cash" : answers.monthlyBudget,
           purpose: answers.purpose,
           knows_zone: answers.zone,
           purchase_timing: answers.timing,
           visit_availability: answers.visit,
-          preferred_years: isCash ? "not_applicable_cash" : answers.years,
+          preferred_years: isCashPurchase ? "not_applicable_cash" : answers.years,
           consent: answers.consent,
           started_at: startedAt,
         }),
@@ -120,9 +120,9 @@ export default function LeadForm() {
     `Nombre: ${answers.name.trim()}`,
     `WhatsApp: ${answers.phone.trim()}`,
     `Forma de pago: ${labelFor("payment", answers.payment)}`,
-    answers.payment !== "cash" ? `Presupuesto inicial: ${labelFor("initialBudget", answers.initialBudget)}` : "Presupuesto inicial: No aplica (compra al contado)",
-    answers.payment !== "cash" ? `Plazo de interés: ${labelFor("years", answers.years)}` : "",
-    answers.payment !== "cash" ? `Cuota mensual: ${labelFor("monthlyBudget", answers.monthlyBudget)}` : "",
+    !(answers.payment === "cash" || answers.payment === "bank") ? `Presupuesto inicial: ${labelFor("initialBudget", answers.initialBudget)}` : "Presupuesto inicial: No aplica (compra al contado)",
+    !(answers.payment === "cash" || answers.payment === "bank") ? `Plazo de interés: ${labelFor("years", answers.years)}` : "",
+    !(answers.payment === "cash" || answers.payment === "bank") ? `Cuota mensual: ${labelFor("monthlyBudget", answers.monthlyBudget)}` : "",
     `Objetivo: ${labelFor("purpose", answers.purpose)}`,
     `Conocimiento de la zona: ${labelFor("zone", answers.zone)}`,
     `Plazo de compra: ${labelFor("timing", answers.timing)}`,
