@@ -9,8 +9,8 @@ type Answers = {
   purpose: string; zone: string; timing: string; visit: string; years: string; consent: boolean;
 };
 const initialAnswers: Answers = {
-  name: "", phone: "", payment: "", initialBudget: "", monthlyBudget: "", purpose: "",
-  zone: "", timing: "", visit: "", years: "", consent: false,
+  name: "", phone: "", payment: "", initialBudget: "", monthlyBudget: "",
+  purpose: "", zone: "", timing: "", visit: "", years: "", consent: false,
 };
 const steps = [
   { title: "¿Cómo te gustaría comprar tu lote?", key: "payment", options: [
@@ -39,6 +39,8 @@ const steps = [
   ]},
 ] as const;
 
+type StepKey = (typeof steps)[number]["key"];
+
 function labelFor(key: string, value: string) {
   const options = steps.find((s) => s.key === key)?.options as readonly (readonly [string,string])[] | undefined;
   return options?.find((o) => o[0] === value)?.[1] ?? value;
@@ -52,20 +54,34 @@ export default function LeadForm() {
   const [error, setError] = useState("");
   const [leadId, setLeadId] = useState("");
   const [startedAt] = useState(() => Date.now());
-  const visibleStep = steps[step];
-  const progress = useMemo(() => Math.round(((step + 1) / (steps.length + 1)) * 100), [step]);
 
-  const update = (key: keyof Answers, value: string | boolean) => setAnswers((prev) => ({ ...prev, [key]: value }));
-  const canContinue = () => {
-    if (step === 0) return !!answers.payment;
-    if (step === 1) return !!answers.initialBudget;
-    if (step === 2) return !!answers.years;
-    if (step === 3) return !!answers.monthlyBudget;
-    if (step === 4) return !!answers.purpose;
-    if (step === 5) return !!answers.zone;
-    if (step === 6) return !!answers.timing;
-    return !!answers.visit;
+  // Cash buyers skip all financing-specific questions.
+  const activeSteps = useMemo(
+    () => answers.payment === "cash"
+      ? steps.filter((item) => !["initialBudget", "years", "monthlyBudget"].includes(item.key))
+      : steps,
+    [answers.payment],
+  );
+  const visibleStep = activeSteps[step];
+  const progress = useMemo(() => Math.round(((step + 1) / (activeSteps.length + 1)) * 100), [step, activeSteps.length]);
+
+  const update = (key: keyof Answers, value: string | boolean) => {
+    setAnswers((prev) => {
+      if (key === "payment" && value === "cash") {
+        return { ...prev, payment: "cash", initialBudget: "not_applicable_cash", years: "not_applicable_cash", monthlyBudget: "not_applicable_cash" };
+      }
+      if (key === "payment" && value !== "cash" && prev.payment === "cash") {
+        return { ...prev, payment: String(value), initialBudget: "", years: "", monthlyBudget: "" };
+      }
+      return { ...prev, [key]: value };
+    });
   };
+
+  const canContinue = () => {
+    if (!visibleStep) return false;
+    return !!answers[visibleStep.key as keyof Answers];
+  };
+
   const saveLead = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError("");
@@ -73,14 +89,22 @@ export default function LeadForm() {
     if (!answers.consent) { setError("Necesitamos tu autorización para guardar tus datos y contactarte sobre el proyecto."); return; }
     setBusy(true);
     try {
+      const isCash = answers.payment === "cash";
       const response = await fetch("/api/leads", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: answers.name.trim(), phone: answers.phone.trim(),
-          payment_method: answers.payment, initial_budget: answers.initialBudget,
-          monthly_budget: answers.monthlyBudget, purpose: answers.purpose, knows_zone: answers.zone,
-          purchase_timing: answers.timing, visit_availability: answers.visit, preferred_years: answers.years,
-          consent: answers.consent, started_at: startedAt,
+          name: answers.name.trim(),
+          phone: answers.phone.trim(),
+          payment_method: answers.payment,
+          initial_budget: isCash ? "not_applicable_cash" : answers.initialBudget,
+          monthly_budget: isCash ? "not_applicable_cash" : answers.monthlyBudget,
+          purpose: answers.purpose,
+          knows_zone: answers.zone,
+          purchase_timing: answers.timing,
+          visit_availability: answers.visit,
+          preferred_years: isCash ? "not_applicable_cash" : answers.years,
+          consent: answers.consent,
+          started_at: startedAt,
         }),
       });
       const result = await response.json();
@@ -91,13 +115,15 @@ export default function LeadForm() {
       setError(e instanceof Error ? e.message : "Ocurrió un error inesperado.");
     } finally { setBusy(false); }
   };
+
   const whatsappMessage = [
     "Hola, quiero agendar una visita a Campos del Este Fase III.",
-    `Nombre: ${answers.name.trim()}`, `WhatsApp: ${answers.phone.trim()}`,
+    `Nombre: ${answers.name.trim()}`,
+    `WhatsApp: ${answers.phone.trim()}`,
     `Forma de pago: ${labelFor("payment", answers.payment)}`,
-    `Presupuesto inicial: ${labelFor("initialBudget", answers.initialBudget)}`,
-    `Plazo de interés: ${labelFor("years", answers.years)}`,
-    `Cuota mensual: ${labelFor("monthlyBudget", answers.monthlyBudget)}`,
+    answers.payment !== "cash" ? `Presupuesto inicial: ${labelFor("initialBudget", answers.initialBudget)}` : "Presupuesto inicial: No aplica (compra al contado)",
+    answers.payment !== "cash" ? `Plazo de interés: ${labelFor("years", answers.years)}` : "",
+    answers.payment !== "cash" ? `Cuota mensual: ${labelFor("monthlyBudget", answers.monthlyBudget)}` : "",
     `Objetivo: ${labelFor("purpose", answers.purpose)}`,
     `Conocimiento de la zona: ${labelFor("zone", answers.zone)}`,
     `Plazo de compra: ${labelFor("timing", answers.timing)}`,
@@ -118,9 +144,9 @@ export default function LeadForm() {
   }
 
   return <form onSubmit={saveLead} className="lead-form">
-    <div className="progress-label"><span>Paso {step + 1} de {steps.length + 1}</span><span>{progress}%</span></div>
+    <div className="progress-label"><span>Paso {step + 1} de {activeSteps.length + 1}</span><span>{progress}%</span></div>
     <div className="progress-track"><div style={{ width: `${progress}%` }} /></div>
-    {step < steps.length ? <>
+    {step < activeSteps.length ? <>
       <p className="form-kicker">Conozcamos tu interés</p>
       <h3 className="form-question">{visibleStep.title}</h3>
       <div className="option-list">
@@ -130,18 +156,18 @@ export default function LeadForm() {
       </div>
       <div className="form-nav">
         <button type="button" className="btn btn-outline" disabled={step === 0} onClick={() => setStep((s) => Math.max(0,s-1))}><ArrowLeft size={16}/> Atrás</button>
-        <button type="button" className="btn" disabled={!canContinue()} onClick={() => setStep((s) => s+1)}>Continuar <ArrowRight size={16}/></button>
+        <button type="button" className="btn" disabled={!canContinue()} onClick={() => setStep((s) => Math.min(s+1, activeSteps.length))}>Continuar <ArrowRight size={16}/></button>
       </div>
     </> : <>
       <p className="form-kicker">Último paso</p>
       <h3 className="form-question">¿Cómo te contactamos?</h3>
       <p className="muted">Dejanos tus datos y después podrás abrir WhatsApp para coordinar la visita.</p>
       <label className="field-label">Nombre y apellido<input autoComplete="name" required maxLength={120} value={answers.name} onChange={(e) => update("name",e.target.value)} placeholder="Tu nombre completo"/></label>
-      <label className="field-label">WhatsApp<input autoComplete="tel" required maxLength={40} value={answers.phone} onChange={(e) => update("phone",e.target.value)} placeholder="+591 ..." /></label>
+      <label className="field-label">WhatsApp<input autoComplete="tel" required maxLength={40} value={answers.phone} onChange={(e) => update("phone",e.target.value)} placeholder="+591 ..."/></label>
       <label className="consent"><input type="checkbox" checked={answers.consent} onChange={(e) => update("consent",e.target.checked)}/><span>Acepto que Campos del Este guarde estos datos y me contacte sobre el proyecto.</span></label>
       {error && <p className="form-error" role="alert">{error}</p>}
       <div className="form-nav">
-        <button type="button" className="btn btn-outline" onClick={() => setStep(steps.length-1)} disabled={busy}><ArrowLeft size={16}/> Atrás</button>
+        <button type="button" className="btn btn-outline" onClick={() => setStep(Math.max(0,activeSteps.length-1))} disabled={busy}><ArrowLeft size={16}/> Atrás</button>
         <button type="submit" className="btn" disabled={busy}>{busy ? <><LoaderCircle size={18} className="spin"/> Guardando…</> : <>Guardar y continuar <ArrowRight size={16}/></>}</button>
       </div>
       <p className="form-privacy">Tus datos se usan para dar seguimiento a tu consulta inmobiliaria.</p>
