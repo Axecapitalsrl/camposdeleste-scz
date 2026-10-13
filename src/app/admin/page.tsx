@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { FormEvent, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import {
   Activity, ArrowDownToLine, BarChart3, Building2, CheckCircle2, ChevronLeft, ChevronRight,
@@ -73,7 +73,7 @@ function BarRows({ items, total, empty }: { items: { key: string; label: string;
     <div className="crm-bar-track"><span style={{ width: `${total ? item.count / total * 100 : 0}%` }}/></div>
   </div>)}</div>;
 }
-function Panel({ title, subtitle, action, children, className = "" }: { title: string; subtitle?: string; action?: React.ReactNode; children: React.ReactNode; className?: string }) {
+function Panel({ title, subtitle, action, children, className = "" }: { title: string; subtitle?: string; action?: ReactNode; children: ReactNode; className?: string }) {
   return <section className={`crm-panel ${className}`}><div className="crm-panel-head"><div><h2>{title}</h2>{subtitle && <p>{subtitle}</p>}</div>{action}</div>{children}</section>;
 }
 
@@ -85,7 +85,7 @@ export default function AdminPage() {
   const [statusFilter, setStatusFilter] = useState("todos"); const [loading, setLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(true); const [error, setError] = useState("");
   const [selected, setSelected] = useState<Lead | null>(null); const [updatingId, setUpdatingId] = useState("");
-  const [view, setView] = useState<View>("dashboard"); const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [view, setView] = useState<View>("dashboard"); const [sidebarCollapsed, setSidebarCollapsed] = useState(false); const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [widgets, setWidgets] = useState<Record<WidgetKey, boolean>>(defaultWidgets);
   const [settingsReady, setSettingsReady] = useState(false);
 
@@ -214,13 +214,13 @@ export default function AdminPage() {
     { key: "settings", title: "Personalizar panel", icon: Settings2 },
   ];
 
-  return <main className={`crm-shell ${sidebarCollapsed ? "crm-sidebar-collapsed" : ""}`}>
+  return <main className={`crm-shell ${sidebarCollapsed ? "crm-sidebar-collapsed" : ""} ${mobileSidebarOpen ? "crm-mobile-sidebar-open" : ""}`}>
     <aside className="crm-sidebar">
       <a href="/" className="crm-brand"><span className="crm-brand-icon">CE</span><span className="crm-brand-copy"><strong>Campos del Este</strong><small>Panel comercial · Fase III</small></span></a>
       <div className="crm-nav-label">GESTIÓN COMERCIAL</div>
       <nav className="crm-nav">{navItems.map((item) => {
         const Icon = item.icon;
-        return <button key={item.key} className={`crm-nav-item ${view === item.key ? "active" : ""}`} onClick={() => setView(item.key)} title={sidebarCollapsed ? item.title : undefined}>
+        return <button key={item.key} className={`crm-nav-item ${view === item.key ? "active" : ""}`} onClick={() => { setView(item.key); setMobileSidebarOpen(false); }} title={sidebarCollapsed ? item.title : undefined}>
           <Icon size={19}/><span>{item.title}</span>{item.key === "leads" && <em>{total}</em>}
         </button>;
       })}</nav>
@@ -233,7 +233,7 @@ export default function AdminPage() {
     </aside>
 
     <section className="crm-main">
-      <header className="crm-topbar"><div className="crm-topbar-left"><button className="crm-mobile-menu" onClick={() => setSidebarCollapsed((value) => !value)} aria-label="Mostrar u ocultar menú"><Menu size={20}/></button><div><span className="crm-top-eyebrow">CAMPOS DEL ESTE / FASE III</span><strong>{view === "dashboard" ? "Centro de métricas" : view === "leads" ? "Gestión de interesados" : "Configuración del panel"}</strong></div></div>
+      <header className="crm-topbar"><div className="crm-topbar-left"><button className="crm-mobile-menu" onClick={() => setMobileSidebarOpen((value) => !value)} aria-label="Mostrar u ocultar menú"><Menu size={20}/></button><div><span className="crm-top-eyebrow">CAMPOS DEL ESTE / FASE III</span><strong>{view === "dashboard" ? "Centro de métricas" : view === "leads" ? "Gestión de interesados" : "Configuración del panel"}</strong></div></div>
         <div className="crm-top-actions"><span className="crm-live-dot"/> <span className="crm-account-email">{loggedInEmail}</span>
           <button className="crm-icon-btn" onClick={() => void loadLeads(sessionToken)} title="Actualizar datos" aria-label="Actualizar datos" disabled={loading}><RefreshCw size={17} className={loading ? "admin-spin" : ""}/></button>
           <button className="crm-user-avatar" onClick={signOut} title="Cerrar sesión" aria-label="Cerrar sesión"><LogOut size={17}/></button>
