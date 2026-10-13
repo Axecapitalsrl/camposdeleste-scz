@@ -86,3 +86,30 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "No pudimos procesar la solicitud." }, { status: 400 });
   }
 }
+
+export async function DELETE(request: Request) {
+  const auth = await authorize(request);
+  if ("response" in auth) return auth.response;
+
+  try {
+    const body = await request.json();
+    const id = typeof body.id === "string" ? body.id.trim() : "";
+    if (!id) return NextResponse.json({ error: "La consulta que querés eliminar no es válida." }, { status: 400 });
+
+    const { data, error } = await auth.db
+      .from("leads")
+      .delete()
+      .eq("id", id)
+      .select("id")
+      .maybeSingle();
+
+    if (error) {
+      console.error("Admin lead deletion failed:", error.message);
+      return NextResponse.json({ error: "No pudimos eliminar la consulta." }, { status: 500 });
+    }
+    if (!data) return NextResponse.json({ error: "No encontramos ese lead o ya fue eliminado." }, { status: 404 });
+    return NextResponse.json({ success: true, id: data.id });
+  } catch {
+    return NextResponse.json({ error: "No pudimos procesar la solicitud." }, { status: 400 });
+  }
+}
