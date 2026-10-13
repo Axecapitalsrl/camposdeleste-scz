@@ -29,3 +29,11 @@
 .crm-delete-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #f1d2ce;border-radius:9px;background:#fff7f6;color:#b13d32;padding:10px 12px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap}
 .crm-delete-button:hover{background:#ffedeb}.crm-delete-button:disabled{opacity:.6;cursor:wait}
 @media(max-width:520px){.crm-admin-role{font-size:0;padding:7px}.crm-admin-role svg{width:15px;height:15px}.crm-delete-area{align-items:flex-start;flex-direction:column}.crm-delete-button{width:100%}}
+
+/* Marca original en el sidebar del CRM */
+.crm-brand{min-height:74px;align-items:center;padding:0 9px 24px}
+.crm-brand-image{display:block;width:100%;max-width:218px;height:68px;object-fit:contain;object-position:left center}
+.crm-sidebar-collapsed .crm-brand{justify-content:center;padding:0 3px 24px}
+.crm-sidebar-collapsed .crm-brand-image{width:48px;max-width:48px;height:48px;object-fit:contain;object-position:center}
+@media(max-width:780px){.crm-brand-image{max-width:218px}}
+@media(max-width:520px){.crm-sidebar .crm-brand{justify-content:flex-start;padding:0 3px 24px}.crm-sidebar .crm-brand-image{width:218px;max-width:218px;height:68px;object-fit:contain;object-position:left center}}
