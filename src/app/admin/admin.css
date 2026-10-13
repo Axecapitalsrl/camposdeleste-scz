@@ -37,3 +37,17 @@
 .crm-sidebar-collapsed .crm-brand-image{width:48px;max-width:48px;height:48px;object-fit:contain;object-position:center}
 @media(max-width:780px){.crm-brand-image{max-width:218px}}
 @media(max-width:520px){.crm-sidebar .crm-brand{justify-content:flex-start;padding:0 3px 24px}.crm-sidebar .crm-brand-image{width:218px;max-width:218px;height:68px;object-fit:contain;object-position:left center}}
+
+/* Selector de tamaño de letra global del CRM */
+.crm-font-settings{padding:5px 20px 20px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:22px}
+.crm-font-preview{display:grid;gap:7px;color:#35453a;line-height:1.5}
+.crm-font-preview strong{font-weight:800}
+.crm-font-preview span{color:#839087;font-size:.9em}
+.crm-font-options{display:flex;align-items:stretch;gap:7px}
+.crm-font-options button{min-width:82px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px 12px;border:1px solid #e2e8e2;border-radius:10px;background:#fff;color:#69766e;font-size:10px;font-weight:700;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+.crm-font-options button>span{font-weight:800;line-height:1.1;color:#334238}
+.crm-font-options button:hover{border-color:#b9d2a9}
+.crm-font-options button.active{border-color:#78a75b;background:#eef6e9;color:#4e7d31;box-shadow:inset 0 0 0 1px #78a75b}
+.crm-font-options button.active>span{color:#4e7d31}
+@media(max-width:780px){.crm-font-settings{grid-template-columns:1fr;gap:15px}.crm-font-options button{flex:1;min-width:0}}
+@media(max-width:520px){.crm-font-settings{padding-left:14px;padding-right:14px}.crm-font-options{gap:5px}.crm-font-options button{padding:9px 5px;font-size:9px}}
