@@ -6,7 +6,7 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 import {
   Activity, ArrowDownToLine, BarChart3, ChevronLeft, ChevronRight,
   Clock3, LayoutDashboard, LogOut, Menu, MessageCircle, RefreshCw,
-  Search, Settings2, ShieldCheck, SlidersHorizontal, Users, X, CalendarCheck, Wallet,
+  Search, Settings2, ShieldCheck, SlidersHorizontal, Users, X, CalendarCheck, Wallet, Trash2,
 } from "lucide-react";
 import "./admin.css";
 
@@ -85,7 +85,7 @@ export default function AdminPage() {
   const [leads, setLeads] = useState<Lead[]>([]); const [query, setQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState("todos"); const [loading, setLoading] = useState(false);
   const [authLoading, setAuthLoading] = useState(true); const [error, setError] = useState("");
-  const [selected, setSelected] = useState<Lead | null>(null); const [updatingId, setUpdatingId] = useState("");
+  const [selected, setSelected] = useState<Lead | null>(null); const [updatingId, setUpdatingId] = useState(""); const [deletingId, setDeletingId] = useState("");
   const [view, setView] = useState<View>("dashboard"); const [sidebarCollapsed, setSidebarCollapsed] = useState(false); const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [widgets, setWidgets] = useState<Record<WidgetKey, boolean>>(defaultWidgets);
   const [settingsReady, setSettingsReady] = useState(false);
@@ -156,6 +156,27 @@ export default function AdminPage() {
       setSelected((current) => current?.id === lead.id ? { ...current, status } : current);
     } catch (e) { setError(e instanceof Error ? e.message : "No pudimos actualizar el estado."); }
     finally { setUpdatingId(""); }
+  }
+
+  async function deleteLead(lead: Lead) {
+    const confirmed = window.confirm(`¿Eliminar definitivamente el lead de ${lead.name}? Esta acción no se puede deshacer.`);
+    if (!confirmed) return;
+    setDeletingId(lead.id); setError("");
+    try {
+      const response = await fetch("/api/admin/leads", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${sessionToken}` },
+        body: JSON.stringify({ id: lead.id }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "No pudimos eliminar el lead.");
+      setLeads((current) => current.filter((item) => item.id !== lead.id));
+      setSelected((current) => current?.id === lead.id ? null : current);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "No pudimos eliminar el lead.");
+    } finally {
+      setDeletingId("");
+    }
   }
   const filteredLeads = useMemo(() => {
     const term = query.trim().toLowerCase();
@@ -236,7 +257,7 @@ export default function AdminPage() {
 
     <section className="crm-main">
       <header className="crm-topbar"><div className="crm-topbar-left"><button className="crm-mobile-menu" onClick={() => setMobileSidebarOpen((value) => !value)} aria-label="Mostrar u ocultar menú"><Menu size={20}/></button><div><span className="crm-top-eyebrow">CAMPOS DEL ESTE / FASE III</span><strong>{view === "dashboard" ? "Centro de métricas" : view === "leads" ? "Gestión de interesados" : "Configuración del panel"}</strong></div></div>
-        <div className="crm-top-actions"><span className="crm-live-dot"/> <span className="crm-account-email">{loggedInEmail}</span>
+        <div className="crm-top-actions"><span className="crm-live-dot"/> <span className="crm-admin-role"><ShieldCheck size={13}/> Administrador</span><span className="crm-account-email">{loggedInEmail}</span>
           <button className="crm-icon-btn" onClick={() => void loadLeads(sessionToken)} title="Actualizar datos" aria-label="Actualizar datos" disabled={loading}><RefreshCw size={17} className={loading ? "admin-spin" : ""}/></button>
           <button className="crm-user-avatar" onClick={signOut} title="Cerrar sesión" aria-label="Cerrar sesión"><LogOut size={17}/></button>
         </div>
@@ -302,6 +323,7 @@ export default function AdminPage() {
       <div className="admin-detail-status"><label>Estado comercial<select value={selected.status} disabled={updatingId === selected.id} onChange={(e) => void updateStatus(selected, e.target.value as Lead["status"])}>{statuses.map((status) => <option key={status.value} value={status.value}>{status.label}</option>)}</select></label></div>
       <div className="admin-answer-grid">{[["Forma de pago", pretty(selected.payment_method)], ["Presupuesto inicial", pretty(selected.initial_budget)], ["Cuota mensual posible", pretty(selected.monthly_budget)], ["Plazo preferido", pretty(selected.preferred_years)], ["Objetivo de compra", pretty(selected.purpose)], ["Conoce la zona", pretty(selected.knows_zone)], ["Cuándo quiere comprar", pretty(selected.purchase_timing)], ["Disponibilidad para visitar", pretty(selected.visit_availability)]].map(([title, value]) => <div className="admin-answer" key={title}><span>{title}</span><strong>{value}</strong></div>)}</div>
       <p className="admin-detail-foot"><ShieldCheck size={15}/> Consentimiento registrado: {selected.consent ? "Sí" : "No"} · Origen: {selected.source}</p>
+      <div className="crm-delete-area"><p>¿Es un registro de prueba o duplicado?</p><button className="crm-delete-button" onClick={() => void deleteLead(selected)} disabled={deletingId === selected.id}><Trash2 size={16}/>{deletingId === selected.id ? "Eliminando…" : "Eliminar lead"}</button></div>
     </section></div>}
   </main>;
 }
