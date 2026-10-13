@@ -164,6 +164,18 @@ export default function AdminPage() {
         .some((value) => String(value || "").toLowerCase().includes(term))));
   }, [leads, query, statusFilter]);
 
+  const monthly = useMemo(() => {
+    const now = new Date();
+    return Array.from({ length: 6 }, (_, index) => {
+      const month = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
+      const value = leads.filter((lead) => {
+        const date = new Date(lead.created_at);
+        return date.getFullYear() === month.getFullYear() && date.getMonth() === month.getMonth();
+      }).length;
+      return { label: new Intl.DateTimeFormat("es-BO", { month: "short" }).format(month).replace(".", ""), count: value };
+    });
+  }, [leads]);
+
   function exportCsv() {
     const headings = ["Fecha", "Nombre", "WhatsApp", "Estado", "Forma de pago", "Presupuesto inicial", "Cuota mensual", "Plazo", "Objetivo", "Zona", "Compra", "Visita", "Origen"];
     const rows = filteredLeads.map((lead) => [dateLabel(lead.created_at), lead.name, lead.phone,
@@ -197,17 +209,6 @@ export default function AdminPage() {
   const funnelItems = statuses.map((status) => ({ key: status.value, label: status.label, count: count(status.value) })).filter((item) => item.count > 0);
   const intentItems = groupCounts(leads.map((lead) => lead.purchase_timing), ["now", "30days", "90days", "later"]);
   const budgetItems = groupCounts(leads.map((lead) => lead.initial_budget), ["under1500", "1500-5000", "5000-10000", "over10000", "saving"]);
-  const monthly = useMemo(() => {
-    const now = new Date();
-    return Array.from({ length: 6 }, (_, index) => {
-      const month = new Date(now.getFullYear(), now.getMonth() - (5 - index), 1);
-      const value = leads.filter((lead) => {
-        const date = new Date(lead.created_at);
-        return date.getFullYear() === month.getFullYear() && date.getMonth() === month.getMonth();
-      }).length;
-      return { label: new Intl.DateTimeFormat("es-BO", { month: "short" }).format(month).replace(".", ""), count: value };
-    });
-  }, [leads]);
   const maxMonthly = Math.max(1, ...monthly.map((item) => item.count));
   const navItems: { key: View; title: string; icon: typeof LayoutDashboard }[] = [
     { key: "dashboard", title: "Resumen general", icon: LayoutDashboard },
