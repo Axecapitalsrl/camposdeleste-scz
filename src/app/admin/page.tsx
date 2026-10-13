@@ -88,22 +88,22 @@ export default function AdminPage() {
   const [selected, setSelected] = useState<Lead | null>(null); const [updatingId, setUpdatingId] = useState(""); const [deletingId, setDeletingId] = useState("");
   const [view, setView] = useState<View>("dashboard"); const [sidebarCollapsed, setSidebarCollapsed] = useState(false); const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [widgets, setWidgets] = useState<Record<WidgetKey, boolean>>(defaultWidgets);
-  const [settingsReady, setSettingsReady] = useState(false);
+  const [settingsReady, setSettingsReady] = useState(false); const [fontScale, setFontScale] = useState(1);
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem("ced-admin-widgets");
       if (saved) setWidgets({ ...defaultWidgets, ...JSON.parse(saved) });
-      setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");
+      setSidebarCollapsed(window.localStorage.getItem("ced-admin-sidebar") === "collapsed");\n      const savedScale = Number(window.localStorage.getItem("ced-admin-font-scale"));\n      if ([0.9, 1, 1.1, 1.2].includes(savedScale)) setFontScale(savedScale);
     } catch { /* configuración local opcional */ }
     setSettingsReady(true);
   }, []);
   useEffect(() => {
     if (settingsReady) {
       window.localStorage.setItem("ced-admin-widgets", JSON.stringify(widgets));
-      window.localStorage.setItem("ced-admin-sidebar", sidebarCollapsed ? "collapsed" : "expanded");
+      window.localStorage.setItem("ced-admin-sidebar", sidebarCollapsed ? "collapsed" : "expanded");\n      window.localStorage.setItem("ced-admin-font-scale", String(fontScale));
     }
-  }, [widgets, sidebarCollapsed, settingsReady]);
+  }, [widgets, sidebarCollapsed, fontScale, settingsReady]);
 
   useEffect(() => {
     const client = makeSupabase(); setSupabase(client);
@@ -237,7 +237,7 @@ export default function AdminPage() {
     { key: "settings", title: "Personalizar panel", icon: Settings2 },
   ];
 
-  return <main className={`crm-shell ${sidebarCollapsed ? "crm-sidebar-collapsed" : ""} ${mobileSidebarOpen ? "crm-mobile-sidebar-open" : ""}`}>
+  return <main className={`crm-shell ${sidebarCollapsed ? "crm-sidebar-collapsed" : ""} ${mobileSidebarOpen ? "crm-mobile-sidebar-open" : ""}`} style={{ zoom: fontScale }}>
     <aside className="crm-sidebar">
       <a href="/" className="crm-brand" aria-label="Campos del Este"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" className="crm-brand-image"/></a>
       <div className="crm-nav-label">GESTIÓN COMERCIAL</div>
@@ -305,6 +305,14 @@ export default function AdminPage() {
 
         {view === "settings" && <>
           <div className="crm-page-heading"><div><span className="crm-section-kicker">TU ESPACIO DE TRABAJO</span><h1>Personalizar panel</h1><p>Elegí qué gráficos querés ver en el resumen. La preferencia se guarda en este navegador.</p></div><button className="crm-button-secondary" onClick={() => setWidgets(defaultWidgets)}><RefreshCw size={16}/> Restaurar gráficos</button></div>
+          <Panel title="Tamaño de letra" subtitle="Ajustá el tamaño de los textos en todo el CRM. Se guarda en este navegador.">
+            <div className="crm-font-settings">
+              <div className="crm-font-preview" style={{ fontSize: `${fontScale * 14}px` }}><strong>Así se verá el texto</strong><span>Los menús, las métricas y las fichas se adaptan al tamaño que elijas.</span></div>
+              <div className="crm-font-options" role="group" aria-label="Tamaño de letra del CRM">
+                {[{value:0.9,label:"Pequeña"},{value:1,label:"Normal"},{value:1.1,label:"Grande"},{value:1.2,label:"Muy grande"}].map((option) => <button type="button" key={option.value} className={fontScale === option.value ? "active" : ""} onClick={() => setFontScale(option.value)} aria-pressed={fontScale === option.value}><span style={{fontSize:`${12 * option.value}px`}}>Aa</span>{option.label}</button>)}
+              </div>
+            </div>
+          </Panel>
           <Panel title="Métricas visibles" subtitle="Activá o desactivá cada módulo del dashboard">
             <div className="crm-settings-list">{widgetNames.map((widget) => <label className="crm-setting-row" key={widget.key}><span className="crm-setting-icon"><BarChart3 size={18}/></span><span className="crm-setting-copy"><strong>{widget.title}</strong><small>{widget.description}</small></span><input type="checkbox" checked={widgets[widget.key]} onChange={(e) => setWidgets((current) => ({ ...current, [widget.key]: e.target.checked }))}/><span className="crm-toggle" aria-hidden="true"/></label>)}</div>
           </Panel>
