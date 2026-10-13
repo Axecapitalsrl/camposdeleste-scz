@@ -1,4 +1,5 @@
 import { ArrowDown, ArrowRight, CheckCircle2, CircleDollarSign, Clock3, MapPinned, Trees, WalletCards, PlayCircle, ShieldCheck } from "lucide-react";
+import Script from "next/script";
 import LeadForm from "@/components/LeadForm";
 import { FINANCING_PLANS, PRESENTATION_VIDEO } from "@/lib/constants";
 
@@ -16,6 +17,18 @@ function CTA({ className = "" }: { className?: string }) {
 }
 export default function Home() {
   return <main>
+    <Script id="meta-pixel" strategy="afterInteractive">{\`
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;
+      s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '3016882181992487');
+      fbq('track', 'PageView');
+    \`}</Script>
+    <noscript><img height="1" width="1" style={{ display: "none" }} src="https://www.facebook.com/tr?id=3016882181992487&ev=PageView&noscript=1" alt="" /></noscript>
     <header className="site-header"><div className="container header-inner">
       <a className="brand" href="#inicio" aria-label="Campos del Este, inicio"><div className="brand-mark"><img src="/images/logo-campos-del-este.png.jpeg" alt="Campos del Este" /></div><span className="brand-caption">FASE III <i>·</i> SANTA CRUZ</span></a>
       <nav className="desktop-nav" aria-label="Navegación principal"><a href="#proyecto">El proyecto</a><a href="#precios">Precios y planes</a><a href="#plano">Plano</a></nav>
