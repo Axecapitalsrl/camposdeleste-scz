@@ -39,7 +39,6 @@ const steps = [
   ]},
 ] as const;
 
-type StepKey = (typeof steps)[number]["key"];
 
 function labelFor(key: string, value: string) {
   const options = steps.find((s) => s.key === key)?.options as readonly (readonly [string,string])[] | undefined;
